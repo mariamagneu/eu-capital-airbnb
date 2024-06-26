@@ -1,11 +1,17 @@
+// Navbar.jsx
+
 import React from 'react';
-import logo from '../assets/logo.png'; // Adjusted path
+import logo from '../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
     <nav>
-      <img src={logo} alt="App Logo" style={{ height: '50px' }} />
-      <span>Apartment Rental Admin Dashboard</span>
+      <div className="logo">
+        <img src={logo} alt="App Logo" style={{ height: '50px' }} />
+        <span>CAPITAL APARTMENTS</span>
+      </div>
+      
     </nav>
   );
 }
