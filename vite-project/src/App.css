@@ -6,7 +6,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #DFCDF8;
+  background-color: #dfcdf8;
 }
 
 .maincontent {
@@ -16,8 +16,6 @@ body {
   width: 80%;
   padding-left: 150px; /* Adjust padding to accommodate the sidebar */
 }
-
-
 
 .absolutecontainer {
   display: flex;
@@ -45,7 +43,6 @@ ul {
   padding: 0;
   margin: 0;
 }
-
 
 a {
   font-weight: 500;
