@@ -7,7 +7,7 @@ function Sidebar() {
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
-        <li><Link to="/listings">Listings</Link></li>
+        <li><Link to="/dashboard">Dashboard</Link></li> {/* Updated link */}
       </ul>
     </div>
   );

@@ -6,7 +6,9 @@ import Footer from "./components/Footer.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Home from "./components/Home.jsx";
 import About from "./components/About.jsx";
-import ApartmentList from "./components/ApartmentList"; // Ensure this path is correct
+import Dashboard from "./components/Dashboard.jsx"; // Updated import
+import ItemDetails from "./components/ItemDetails.jsx";
+import NotFound from "./components/NotFound.jsx";
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/listings" element={<ApartmentList />} />
+            <Route path="/dashboard" element={<Dashboard />} /> {/* Updated route */}
+            <Route path="/dashboard/:id" element={<ItemDetails />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </div>
