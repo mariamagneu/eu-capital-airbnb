@@ -13,6 +13,12 @@ function ApartmentCard({ apartment, onDelete }) {
     width: "80%",
   };
 
+  const handleDeleteClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onDelete(apartment.id);
+  };
+
   return (
     <div className="apartment-card" style={cardStyle}>
       <h3>{apartment.name}</h3>
@@ -33,7 +39,7 @@ function ApartmentCard({ apartment, onDelete }) {
         </a>
       </div>
       <div style={{ marginTop: "1em" }}>
-        <button onClick={() => onDelete(apartment.id)}>Delete</button>
+        <button onClick={handleDeleteClick}>Delete</button>
       </div>
     </div>
   );

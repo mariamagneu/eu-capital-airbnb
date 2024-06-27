@@ -1,5 +1,3 @@
-// Home.jsx
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -18,13 +16,8 @@ function Home() {
       <h2>Apartments in the Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
-          <Link to={`/apartments/${apartment.id}`}>
-            {" "}
-            <ApartmentCard
-              key={apartment.id}
-              apartment={apartment}
-              onDelete={handleDelete}
-            />
+          <Link key={apartment.id} to={`/apartments/${apartment.id}`}>
+            <ApartmentCard apartment={apartment} onDelete={handleDelete} />
           </Link>
         ))
       ) : (
