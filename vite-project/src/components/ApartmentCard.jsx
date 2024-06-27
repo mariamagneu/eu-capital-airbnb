@@ -13,30 +13,21 @@ function ApartmentCard({ apartment, onDelete }) {
     width: "80%",
   };
 
-  const linkStyle = {
-    fontWeight: "bold",
-    textDecoration: "none",
-  };
-
   return (
     <div className="apartment-card" style={cardStyle}>
       <h3>{apartment.name}</h3>
       <p>
         Location: {apartment.city}, {apartment.country}
       </p>
-      <p>Price: ${apartment.price} per night</p>
-      <p>Rating: {apartment.review_scores_rating}/5</p>
-      <p>Status: {isHighlyRated ? "✅" : "❌"}</p>
-      <p>Description: {apartment.description}</p>
-      <p>Hosted by: {apartment.host_name}</p>
+      <p>High Rating: {isHighlyRated ? "✅" : "❌"}</p>
       <p>Accommodates: {apartment.accommodates} guests</p>
 
       <div>
         <a
+          className="apartment-link"
           href={apartment.picture_url.url}
           target="_blank"
           rel="noopener noreferrer"
-          style={linkStyle}
         >
           View Apartment Details
         </a>
