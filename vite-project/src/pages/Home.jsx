@@ -1,17 +1,37 @@
 // Home.jsx
 
-import React from 'react';
-import banner from '../assets/banner.png'; // Import the banner image
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+import ApartmentCard from "../components/ApartmentCard";
+import rentalsData from "../rentals.json";
 
 function Home() {
+  const [apartments, setApartments] = useState(rentalsData);
+
+  const handleDelete = (id) => {
+    setApartments(apartments.filter((apartment) => apartment.id !== id));
+  };
+
   return (
-    <div>
-      <img src={banner} alt="Banner" style={{ width: '60%' }} />
-      <h2>Welcome!</h2>
-      <p>This is Capital Apartments – the No. 1 place for quality living in Europe's most thriving capitals.</p>
+    <div className="dashboard">
+      <h2>Apartments in the Database</h2>
+      {apartments.length > 0 ? (
+        apartments.map((apartment) => (
+          <Link to={`/apartments/${apartment.id}`}>
+            {" "}
+            <ApartmentCard
+              key={apartment.id}
+              apartment={apartment}
+              onDelete={handleDelete}
+            />
+          </Link>
+        ))
+      ) : (
+        <p>No apartments available.</p>
+      )}
     </div>
   );
 }
 
 export default Home;
-

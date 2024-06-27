@@ -9,6 +9,7 @@ import About from "./pages/About.jsx";
 import Dashboard from "./pages/Dashboard.jsx"; // Updated import
 import ItemDetails from "./components/ItemDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import AptDetailsPage from "./pages/AptDetailsPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             {/* Updated route */}
             <Route path="/dashboard/:id" element={<ItemDetails />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/apartments/:aptId" element={<AptDetailsPage />} />
           </Routes>
           <Footer />
         </div>
