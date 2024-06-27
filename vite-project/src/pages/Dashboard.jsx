@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import ApartmentCard from './ApartmentCard';
-import rentalsData from '../rentals.json';
+import React, { useEffect, useState } from "react";
+import ApartmentCard from "../components/ApartmentCard";
+import rentalsData from "../rentals.json";
 
 function Dashboard() {
   const [apartments, setApartments] = useState([]);
@@ -11,15 +11,19 @@ function Dashboard() {
   }, []);
 
   const handleDelete = (id) => {
-    setApartments(apartments.filter(apartment => apartment.id !== id));
+    setApartments(apartments.filter((apartment) => apartment.id !== id));
   };
 
   return (
     <div className="dashboard">
       <h2>Dashboard</h2>
       {apartments.length > 0 ? (
-        apartments.map(apartment => (
-          <ApartmentCard key={apartment.id} apartment={apartment} onDelete={handleDelete} />
+        apartments.map((apartment) => (
+          <ApartmentCard
+            key={apartment.id}
+            apartment={apartment}
+            onDelete={handleDelete}
+          />
         ))
       ) : (
         <p>No apartments available.</p>
