@@ -17,11 +17,13 @@ body {
 }
 
 #sidebar {
-  width: 150px;
+  width: 130px;
   background-color: #c7afe9;
   height: 100vh;
   position: fixed;
   font-size: 2em;
+  padding-top: 10px;
+  padding-left: 20px;
 }
 
 .maincontent {
@@ -67,7 +69,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #c7afe9;
+  color: #dfcdf8;
   background-color: black;
 }
 
