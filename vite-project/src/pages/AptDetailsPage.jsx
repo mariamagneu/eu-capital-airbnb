@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import placeholderImage from "../assets/placeholderimg.jpg";
-import axios from "axios";
+import rentalsData from "../rentals.json"; // Assuming this is where your data is stored
 
 const containerStyle = {
   border: "1px solid #c7afe9",
@@ -41,20 +41,15 @@ function AptDetailsPage() {
   const [aptData, setAptData] = React.useState(null);
 
   React.useEffect(() => {
-    const fetchApartment = async () => {
-      try {
-        const response = await axios.get(`/api/apartments/${aptId}`);
-        setAptData(response.data);
-      } catch (error) {
-        console.error("Error fetching apartment:", error);
-      }
-    };
-
-    fetchApartment();
+    // Simulating fetching data from rentalsData
+    const foundApt = rentalsData.find((apt) => apt.id.toString() === aptId);
+    if (foundApt) {
+      setAptData(foundApt);
+    }
   }, [aptId]);
 
   if (!aptData) {
-    return <div>Loading...</div>; // Or handle loading state
+    return <div>Apartment not found.</div>;
   }
 
   return (
