@@ -12,7 +12,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <h2>Apartments in the Database</h2>
+      <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <ApartmentCard

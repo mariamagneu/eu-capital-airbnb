@@ -11,7 +11,7 @@ function ApartmentList() {
 
   return (
     <div className="apartment-list">
-      <h2>List of Apartments</h2>
+      <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <ApartmentCard

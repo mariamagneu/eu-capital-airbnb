@@ -11,6 +11,7 @@ function ApartmentCard({ apartment, onDelete }) {
     padding: "16px",
     marginBottom: "16px",
     width: "80%",
+    color: "black",
   };
 
   const handleDeleteClick = (event) => {

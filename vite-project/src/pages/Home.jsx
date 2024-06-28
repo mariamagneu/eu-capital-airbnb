@@ -13,7 +13,7 @@ function Home() {
 
   return (
     <div className="dashboard">
-      <h2>Apartments in the Database</h2>
+      <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <Link key={apartment.id} to={`/apartments/${apartment.id}`}>

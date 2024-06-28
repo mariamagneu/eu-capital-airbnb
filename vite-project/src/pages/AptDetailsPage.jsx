@@ -8,14 +8,14 @@ const containerStyle = {
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   borderRadius: "8px",
   padding: "16px",
-  marginBottom: "16px",
-  width: "80%",
+  marginBottom: "40px",
+  marginTop: "20px",
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: "30px",
   alignItems: "center",
   height: "80vh",
-  width: "85vw",
+  width: "82vw",
 };
 
 const imgContainerStyle = {
