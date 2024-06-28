@@ -1,6 +1,7 @@
-import placeholderImage from "../assets/placeholderimg.jpg";
-import appartmentData from "../rentals.json";
+import React from "react";
 import { useParams, Link } from "react-router-dom";
+import placeholderImage from "../assets/placeholderimg.jpg";
+import axios from "axios";
 
 const containerStyle = {
   border: "1px solid #c7afe9",
@@ -37,7 +38,24 @@ const txtContainerStyle = {
 
 function AptDetailsPage() {
   const { aptId } = useParams();
-  const aptData = appartmentData.find((appartment) => appartment.id === aptId);
+  const [aptData, setAptData] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchApartment = async () => {
+      try {
+        const response = await axios.get(`/api/apartments/${aptId}`);
+        setAptData(response.data);
+      } catch (error) {
+        console.error("Error fetching apartment:", error);
+      }
+    };
+
+    fetchApartment();
+  }, [aptId]);
+
+  if (!aptData) {
+    return <div>Loading...</div>; // Or handle loading state
+  }
 
   return (
     <div style={containerStyle}>
@@ -69,6 +87,13 @@ function AptDetailsPage() {
         <p>Host Name: {aptData.host_name}</p>
         <p>Host Since: {aptData.host_since}</p>
         <p>Host Response Time: {aptData.host_response_time}</p>
+
+        {/* Edit button */}
+        <Link to={`/apartments/edit/${aptId}`} style={{ textDecoration: "none" }}>
+          <button style={{ marginTop: "10px", padding: "8px 16px", cursor: "pointer" }}>
+            Edit
+          </button>
+        </Link>
       </div>
     </div>
   );
