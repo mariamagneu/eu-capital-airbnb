@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ApartmentCard from "./ApartmentCard";
+
 import rentalsData from "../rentals.json";
 
 function ApartmentList() {

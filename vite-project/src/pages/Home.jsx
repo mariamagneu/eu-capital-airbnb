@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
 import ApartmentCard from "../components/ApartmentCard";
 import rentalsData from "../rentals.json";
+import AddAptForm from "../components/AddAptForm";
 
 function Home() {
   const [apartments, setApartments] = useState(rentalsData);
@@ -11,14 +10,21 @@ function Home() {
     setApartments(apartments.filter((apartment) => apartment.id !== id));
   };
 
+  const handleAddApartment = (newApartment) => {
+    setApartments([newApartment, ...apartments]);
+  };
+
   return (
     <div className="dashboard">
+      <AddAptForm addApt={handleAddApartment} />
       <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
-          <Link key={apartment.id} to={`/apartments/${apartment.id}`}>
-            <ApartmentCard apartment={apartment} onDelete={handleDelete} />
-          </Link>
+          <ApartmentCard
+            key={apartment.id}
+            apartment={apartment}
+            onDelete={handleDelete}
+          />
         ))
       ) : (
         <p>No apartments available.</p>
