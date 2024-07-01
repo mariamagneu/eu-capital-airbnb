@@ -9,7 +9,7 @@ const formStyle = {
   gridRowGap: "15px",
   gridColumnGap: "20px",
   width: "50%",
-  margin: "0 auto",
+  margin: "0 auto 50px auto",
   padding: "16px",
   border: "1px solid #c7afe9",
   backgroundColor: "#e4d4fa",
