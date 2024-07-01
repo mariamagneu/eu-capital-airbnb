@@ -23,13 +23,11 @@ function ApartmentCard({ apartment, onDelete }) {
   const isHighlyRated = apartment.review_scores_rating > 80;
 
   const handleDeleteClick = (event) => {
-    event.preventDefault();
     event.stopPropagation();
     onDelete(apartment.id);
   };
 
   const handleEditClick = (event) => {
-    event.preventDefault();
     event.stopPropagation();
     navigate(`/apartments/edit/${apartment.id}`);
   };

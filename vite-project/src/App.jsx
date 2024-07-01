@@ -19,7 +19,6 @@ function App() {
   const handleDelete = (id) => {
     const updatedApartments = apartments.filter((apt) => apt.id !== id);
     setApartments(updatedApartments);
-    // You can handle deleting from server or local storage here if needed
   };
 
   const handleEditClick = (id) => {
