@@ -1,7 +1,42 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-function AddAptForm(props) {
-  const [id, setId] = useState("");
+const formStyle = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr 1fr",
+  gap: "15px", // Adjusted to match EditAptPage
+  width: "70%",
+  margin: "0 auto",
+  padding: "16px",
+  border: "1px solid #c7afe9",
+  backgroundColor: "#e4d4fa",
+  borderRadius: "8px",
+};
+
+const inputStyle = {
+  padding: "8px",
+  borderRadius: "4px",
+  border: "1px solid #ccc",
+  width: "calc(100% - 16px)",
+};
+
+const selectStyle = {
+  padding: "8px",
+  borderRadius: "4px",
+  border: "1px solid #ccc",
+  width: "calc(100% + 2px)",
+};
+
+const fullWidthStyle = {
+  gridColumn: "span 3",
+  width: "calc(100% - 16px)",
+};
+
+const titleStyle = {
+  textAlign: "center",
+  marginBottom: "16px",
+};
+
+function AddAptForm({ addApt }) {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [neighbourhood, setNeighbourhood] = useState("");
@@ -11,149 +46,24 @@ function AddAptForm(props) {
   const [houseRules, setHouseRules] = useState("");
   const [hostName, setHostName] = useState("");
   const [hostSince, setHostSince] = useState("");
-  const [hostResponseTime, setHostResponseTime] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [roomType, setRoomType] = useState("");
   const [accommodates, setAccommodates] = useState(0);
-  const [bathrooms, setBathrooms] = useState(0.0);
+  const [bathrooms, setBathrooms] = useState(0);
   const [bedrooms, setBedrooms] = useState(0);
   const [beds, setBeds] = useState(0);
   const [price, setPrice] = useState(0);
   const [cleaningFee, setCleaningFee] = useState(0);
-  const [reviewScoresRating, setReviewScoresRating] = useState(0);
+  const [date, setDate] = useState("");
   const [cancellationPolicy, setCancellationPolicy] = useState("");
 
-  function handleIdInput(e) {
-    setId(e.target.value);
-  }
+  const generateId = () => {
+    return Math.floor(Math.random() * (9999999 - 8455484 + 1)) + 8455484;
+  };
 
-  function handleCountryInput(e) {
-    setCountry(e.target.value);
-  }
-
-  function handleCityInput(e) {
-    setCity(e.target.value);
-  }
-
-  function handleNeighbourhoodInput(e) {
-    setNeighbourhood(e.target.value);
-  }
-
-  function handleNameInput(e) {
-    setName(e.target.value);
-  }
-
-  function handleSpaceInput(e) {
-    setSpace(e.target.value);
-  }
-
-  function handleDescriptionInput(e) {
-    setDescription(e.target.value);
-  }
-
-  function handleHouseRulesInput(e) {
-    setHouseRules(e.target.value);
-  }
-
-  function handleHostNameInput(e) {
-    setHostName(e.target.value);
-  }
-
-  function handleHostSinceInput(e) {
-    setHostSince(e.target.value);
-  }
-
-  function handleHostResponseTimeInput(e) {
-    setHostResponseTime(e.target.value);
-  }
-
-  function handlePropertyTypeInput(e) {
-    setPropertyType(e.target.value);
-  }
-
-  function handleRoomTypeInput(e) {
-    setRoomType(e.target.value);
-  }
-
-  function handleAccommodatesInput(e) {
-    setAccommodates(Number(e.target.value));
-  }
-
-  function handleBathroomsInput(e) {
-    setBathrooms(Number(e.target.value));
-  }
-
-  function handleBedroomsInput(e) {
-    setBedrooms(Number(e.target.value));
-  }
-
-  function handleBedsInput(e) {
-    setBeds(Number(e.target.value));
-  }
-
-  function handlePriceInput(e) {
-    setPrice(Number(e.target.value));
-  }
-
-  function handleCleaningFeeInput(e) {
-    setCleaningFee(Number(e.target.value));
-  }
-
-  function handleReviewScoresRatingInput(e) {
-    setReviewScoresRating(Number(e.target.value));
-  }
-
-  function handleCancellationPolicyInput(e) {
-    setCancellationPolicy(e.target.value);
-  }
-
-  // Handle input functions for picture_url object
-  function handleThumbnailInput(e) {
-    setThumbnail(e.target.checked);
-  }
-
-  function handleFilenameInput(e) {
-    setFilename(e.target.value);
-  }
-
-  function handleFormatInput(e) {
-    setFormat(e.target.value);
-  }
-
-  function handleWidthInput(e) {
-    setWidth(Number(e.target.value));
-  }
-
-  function handleMimetypeInput(e) {
-    setMimetype(e.target.value);
-  }
-
-  function handleEtagInput(e) {
-    setEtag(e.target.value);
-  }
-
-  function handlePictureIdInput(e) {
-    setPictureId(e.target.value);
-  }
-
-  function handleLastSynchronizedInput(e) {
-    setLastSynchronized(e.target.value);
-  }
-
-  function handleColorSummaryInput(e) {
-    setColorSummary(e.target.value.split(","));
-  }
-
-  function handleHeightInput(e) {
-    setHeight(Number(e.target.value));
-  }
-
-  function handleUrlInput(e) {
-    setUrl(e.target.value);
-  }
-
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    const id = generateId();
     const newListing = {
       id,
       country,
@@ -165,7 +75,6 @@ function AddAptForm(props) {
       houseRules,
       hostName,
       hostSince,
-      hostResponseTime,
       propertyType,
       roomType,
       accommodates,
@@ -174,14 +83,13 @@ function AddAptForm(props) {
       beds,
       price,
       cleaningFee,
-      reviewScoresRating,
+      date,
       cancellationPolicy,
     };
     console.log("New Listing ", newListing);
-    props.addApt(newListing);
+    addApt(newListing);
 
     // Reset form after submission
-    setId("");
     setCountry("");
     setCity("");
     setNeighbourhood("");
@@ -191,215 +99,167 @@ function AddAptForm(props) {
     setHouseRules("");
     setHostName("");
     setHostSince("");
-    setHostResponseTime("");
     setPropertyType("");
     setRoomType("");
     setAccommodates(0);
-    setBathrooms(0.0);
+    setBathrooms(0);
     setBedrooms(0);
     setBeds(0);
     setPrice(0);
     setCleaningFee(0);
-    setReviewScoresRating(0);
+    setDate("");
     setCancellationPolicy("");
-  }
+  };
 
   return (
     <>
-      <h1>New Apartment Listing</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          ID:
-          <input
-            type="text"
-            value={id}
-            onChange={handleIdInput}
-            placeholder="ID"
-          />
-        </label>
-        <label>
-          Country:
-          <input
-            type="text"
-            value={country}
-            onChange={handleCountryInput}
-            placeholder="Country"
-          />
-        </label>
-        <label>
-          City:
-          <input
-            type="text"
-            value={city}
-            onChange={handleCityInput}
-            placeholder="City"
-          />
-        </label>
-        <label>
-          Neighbourhood:
-          <input
-            type="text"
-            value={neighbourhood}
-            onChange={handleNeighbourhoodInput}
-            placeholder="Neighbourhood"
-          />
-        </label>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={handleNameInput}
-            placeholder="Name"
-          />
-        </label>
-        <label>
-          Space:
-          <input
-            type="text"
-            value={space}
-            onChange={handleSpaceInput}
-            placeholder="Space"
-          />
-        </label>
-        <label>
-          Description:
-          <input
-            type="text"
-            value={description}
-            onChange={handleDescriptionInput}
-            placeholder="Description"
-          />
-        </label>
-        <label>
-          House Rules:
-          <input
-            type="text"
-            value={houseRules}
-            onChange={handleHouseRulesInput}
-            placeholder="House Rules"
-          />
-        </label>
-        <label>
-          Host Name:
-          <input
-            type="text"
-            value={hostName}
-            onChange={handleHostNameInput}
-            placeholder="Host Name"
-          />
-        </label>
-        <label>
-          Host Since:
-          <input
-            type="date"
-            value={hostSince}
-            onChange={handleHostSinceInput}
-            placeholder="Host Since"
-          />
-        </label>
-        <label>
-          Host Response Time:
-          <input
-            type="text"
-            value={hostResponseTime}
-            onChange={handleHostResponseTimeInput}
-            placeholder="Host Response Time"
-          />
-        </label>
-        <label>
-          Property Type:
-          <input
-            type="text"
-            value={propertyType}
-            onChange={handlePropertyTypeInput}
-            placeholder="Property Type"
-          />
-        </label>
-        <label>
-          Room Type:
-          <input
-            type="text"
-            value={roomType}
-            onChange={handleRoomTypeInput}
-            placeholder="Room Type"
-          />
-        </label>
-        <label>
-          Accommodates:
-          <input
-            type="number"
-            value={accommodates}
-            onChange={handleAccommodatesInput}
-            placeholder="Accommodates"
-          />
-        </label>
-        <label>
-          Bathrooms:
-          <input
-            type="number"
-            value={bathrooms}
-            onChange={handleBathroomsInput}
-            placeholder="Bathrooms"
-          />
-        </label>
-        <label>
-          Bedrooms:
-          <input
-            type="number"
-            value={bedrooms}
-            onChange={handleBedroomsInput}
-            placeholder="Bedrooms"
-          />
-        </label>
-        <label>
-          Beds:
-          <input
-            type="number"
-            value={beds}
-            onChange={handleBedsInput}
-            placeholder="Beds"
-          />
-        </label>
-        <label>
-          Price:
-          <input
-            type="number"
-            value={price}
-            onChange={handlePriceInput}
-            placeholder="Price"
-          />
-        </label>
-        <label>
-          Cleaning Fee:
-          <input
-            type="number"
-            value={cleaningFee}
-            onChange={handleCleaningFeeInput}
-            placeholder="Cleaning Fee"
-          />
-        </label>
-        <label>
-          Review Scores Rating:
-          <input
-            type="number"
-            value={reviewScoresRating}
-            onChange={handleReviewScoresRatingInput}
-            placeholder="Review Scores Rating"
-          />
-        </label>
-        <label>
-          Cancellation Policy:
-          <input
-            type="text"
-            value={cancellationPolicy}
-            onChange={handleCancellationPolicyInput}
-            placeholder="Cancellation Policy"
-          />
-        </label>
-        <button type="submit">Submit</button>
+      <h1 style={titleStyle}>Add new apartment</h1>
+      <form onSubmit={handleSubmit} style={formStyle}>
+        <input
+          type="text"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          placeholder="Country"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="City"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          value={neighbourhood}
+          onChange={(e) => setNeighbourhood(e.target.value)}
+          placeholder="Neighbourhood"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          value={space}
+          onChange={(e) => setSpace(e.target.value)}
+          placeholder="Space"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          value={hostName}
+          onChange={(e) => setHostName(e.target.value)}
+          placeholder="Host Name"
+          style={inputStyle}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          placeholder="Date"
+          style={inputStyle}
+        />
+        <select
+          value={propertyType}
+          onChange={(e) => setPropertyType(e.target.value)}
+          style={selectStyle}
+        >
+          <option value="" disabled>
+            Property Type
+          </option>
+          <option value="Apartment">Apartment</option>
+          <option value="Loft">Loft</option>
+          <option value="Other">Other</option>
+        </select>
+        <select
+          value={roomType}
+          onChange={(e) => setRoomType(e.target.value)}
+          style={selectStyle}
+        >
+          <option value="" disabled>
+            Room Type
+          </option>
+          <option value="Entire Home/Apt">Entire Home/Apt</option>
+          <option value="Private Room">Private Room</option>
+          <option value="Shared Room">Shared Room</option>
+        </select>
+        <input
+          type="number"
+          value={accommodates}
+          onChange={(e) => setAccommodates(Number(e.target.value))}
+          placeholder="Accommodates"
+          style={inputStyle}
+        />
+        <input
+          type="number"
+          value={bathrooms}
+          onChange={(e) => setBathrooms(Number(e.target.value))}
+          placeholder="Bathrooms"
+          style={inputStyle}
+        />
+        <input
+          type="number"
+          value={bedrooms}
+          onChange={(e) => setBedrooms(Number(e.target.value))}
+          placeholder="Bedrooms"
+          style={inputStyle}
+        />
+        <input
+          type="number"
+          value={beds}
+          onChange={(e) => setBeds(Number(e.target.value))}
+          placeholder="Beds"
+          style={inputStyle}
+        />
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(Number(e.target.value))}
+          placeholder="Price"
+          style={inputStyle}
+        />
+        <input
+          type="number"
+          value={cleaningFee}
+          onChange={(e) => setCleaningFee(Number(e.target.value))}
+          placeholder="Cleaning Fee"
+          style={inputStyle}
+        />
+        <select
+          value={cancellationPolicy}
+          onChange={(e) => setCancellationPolicy(e.target.value)}
+          style={selectStyle}
+        >
+          <option value="" disabled>
+            Cancellation Policy
+          </option>
+          <option value="Strict">Strict</option>
+          <option value="Moderate">Moderate</option>
+          <option value="Flexible">Flexible</option>
+        </select>
+        <textarea
+          value={houseRules}
+          onChange={(e) => setHouseRules(e.target.value)}
+          placeholder="House Rules"
+          style={{ ...inputStyle, ...fullWidthStyle }}
+        />
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+          style={{ ...inputStyle, ...fullWidthStyle }}
+        />
+        <div style={{ gridColumn: "span 3", textAlign: "right" }}>
+          <button type="submit">Submit</button>
+        </div>
       </form>
     </>
   );
 }
+
 export default AddAptForm;

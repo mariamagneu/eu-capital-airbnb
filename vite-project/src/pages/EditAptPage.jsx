@@ -8,7 +8,6 @@ const formStyle = {
   gridTemplateColumns: "1fr 1fr",
   gridRowGap: "15px",
   gridColumnGap: "20px",
-  gap: "32px 30px 5px 40px",
   width: "50%",
   margin: "0 auto",
   padding: "16px",
