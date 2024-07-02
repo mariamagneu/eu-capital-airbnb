@@ -5,7 +5,7 @@ import EditAptPage from "../pages/EditAptPage";
 import rentalsData from "../rentals.json";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-function Dashboard() {
+function Dashboard({ apartmens, onDelete }) {
   const [apartments, setApartments] = useState(rentalsData);
 
   const handleDelete = (id) => {
@@ -13,7 +13,7 @@ function Dashboard() {
   };
 
   const handleAddApartment = (newApartment) => {
-    newApartment.id = '_' + Math.random().toString(36).substr(2, 9); // Generate random ID
+    newApartment.id = "_" + Math.random().toString(36).substr(2, 9); // Generate random ID
     setApartments([newApartment, ...apartments]);
   };
 
@@ -24,18 +24,6 @@ function Dashboard() {
     setApartments(updatedApartments);
   };
 
-  return (
-    <div className="dashboard">
-      <Routes>
-        <Route path="/" element={<Home apartments={apartments} onDelete={handleDelete} />} />
-        <Route path="/add" element={<AddAptForm addApt={handleAddApartment} />} />
-        <Route path="/edit/:id" element={<EditAptPage apartments={apartments} onUpdate={handleEditApartment} />} />
-      </Routes>
-    </div>
-  );
-}
-
-function Home({ apartments, onDelete }) {
   return (
     <>
       <h2>Apartment Database</h2>
