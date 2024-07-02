@@ -32,7 +32,10 @@ function App() {
   };
 
   const addNewApartment = (newApartment) => {
-    newApartment.id = apartments.length > 0 ? Math.max(...apartments.map((apt) => apt.id)) + 1 : 1;
+    newApartment.id =
+      apartments.length > 0
+        ? Math.max(...apartments.map((apt) => apt.id)) + 1
+        : 1;
     setApartments([...apartments, newApartment]);
   };
 
@@ -44,10 +47,31 @@ function App() {
           <Navbar className="navbar" />
           <div className="content">
             <Routes>
-              <Route path="/" element={<Dashboard apartments={apartments} updateApartmentData={updateApartmentData} addNewApartment={addNewApartment} handleDelete={handleDelete} />} />
+              <Route
+                path="/"
+                element={
+                  <Dashboard
+                    apartments={apartments}
+                    updateApartmentData={updateApartmentData}
+                    addNewApartment={addNewApartment}
+                    handleDelete={handleDelete}
+                  />
+                }
+              />
               <Route path="/about" element={<About />} />
-              <Route path="/apartments/:aptId" element={<AptDetailsPage apartments={apartments} />} />
-              <Route path="/apartments/edit/:aptId" element={<EditAptPage apartments={apartments} onUpdate={updateApartmentData} />} />
+              <Route
+                path="/apartments/:aptId"
+                element={<AptDetailsPage apartments={apartments} />}
+              />
+              <Route
+                path="/apartments/edit/:aptId"
+                element={
+                  <EditAptPage
+                    apartments={apartments}
+                    onUpdate={updateApartmentData}
+                  />
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

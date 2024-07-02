@@ -1,44 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import ApartmentCard from "../components/ApartmentCard";
+import { Route, Routes } from "react-router-dom";
 import AddAptForm from "../components/AddAptForm";
-import EditAptPage from "../pages/EditAptPage";
-import rentalsData from "../rentals.json";
-import { Route, Routes, Navigate } from "react-router-dom";
+import EditAptPage from "./EditAptPage";
 
-function Dashboard({ apartmens, onDelete }) {
-  const [apartments, setApartments] = useState(rentalsData);
-
-  const handleDelete = (id) => {
-    setApartments(apartments.filter((apartment) => apartment.id !== id));
-  };
-
-  const handleAddApartment = (newApartment) => {
-    newApartment.id = "_" + Math.random().toString(36).substr(2, 9); // Generate random ID
-    setApartments([newApartment, ...apartments]);
-  };
-
-  const handleEditApartment = (updatedApartment) => {
-    const updatedApartments = apartments.map((apartment) =>
-      apartment.id === updatedApartment.id ? updatedApartment : apartment
-    );
-    setApartments(updatedApartments);
-  };
-
+function Dashboard({
+  apartments,
+  updateApartmentData,
+  addNewApartment,
+  handleDelete,
+}) {
   return (
-    <>
+    <div className="dashboard">
       <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <ApartmentCard
             key={apartment.id}
             apartment={apartment}
-            onDelete={onDelete}
+            onDelete={() => handleDelete(apartment.id)}
           />
         ))
       ) : (
         <p>No apartments available.</p>
       )}
-    </>
+      <Routes>
+        <Route path="/add" element={<AddAptForm addApt={addNewApartment} />} />
+        <Route
+          path="/edit/:id"
+          element={
+            <EditAptPage
+              apartments={apartments}
+              onUpdate={updateApartmentData}
+            />
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 
