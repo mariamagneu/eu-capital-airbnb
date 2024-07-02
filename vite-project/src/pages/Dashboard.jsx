@@ -24,18 +24,6 @@ function Dashboard({
       ) : (
         <p>No apartments available.</p>
       )}
-      <Routes>
-        <Route path="/add" element={<AddAptForm addApt={addNewApartment} />} />
-        <Route
-          path="/edit/:id"
-          element={
-            <EditAptPage
-              apartments={apartments}
-              onUpdate={updateApartmentData}
-            />
-          }
-        />
-      </Routes>
     </div>
   );
 }

@@ -52,8 +52,6 @@ function App() {
                 element={
                   <Dashboard
                     apartments={apartments}
-                    updateApartmentData={updateApartmentData}
-                    addNewApartment={addNewApartment}
                     handleDelete={handleDelete}
                   />
                 }
@@ -71,6 +69,10 @@ function App() {
                     onUpdate={updateApartmentData}
                   />
                 }
+              />
+              <Route
+                path="/add"
+                element={<AddAptForm addApt={addNewApartment} />}
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
