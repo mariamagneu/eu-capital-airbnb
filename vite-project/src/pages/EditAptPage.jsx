@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import rentalsData from "../rentals.json"; // Assuming this is where your data is stored
-import axios from "axios";
 
 const formStyle = {
   display: "grid",
@@ -40,12 +38,12 @@ const titleStyle = {
   marginBottom: "16px",
 };
 
-function EditAptPage() {
+function EditAptPage({ apartments, onUpdate }) {
   const { aptId } = useParams();
   const navigate = useNavigate();
 
-  // Find the initial apartment data from rentalsData
-  const initialApt = rentalsData.find((apartment) => apartment.id === aptId);
+  // Find the initial apartment data
+  const initialApt = apartments.find((apartment) => apartment.id.toString() === aptId);
 
   // State to hold the updated apartment data
   const [updatedApt, setUpdatedApt] = useState(initialApt || {
@@ -61,6 +59,22 @@ function EditAptPage() {
     house_rules: "",
   });
 
+  useEffect(() => {
+    // Update local state with new apartment data if props change (e.g., on initial load)
+    setUpdatedApt(initialApt || {
+      name: "",
+      accommodates: "",
+      bathrooms: "",
+      bedrooms: "",
+      beds: "",
+      price: "",
+      cleaning_fee: "",
+      cancellation_policy: "",
+      description: "",
+      house_rules: "",
+    });
+  }, [initialApt]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedApt((prevApt) => ({
@@ -69,37 +83,18 @@ function EditAptPage() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    try {
-      const response = await axios.put(`/api/apartments/${aptId}`, updatedApt);
-      console.log("Updated apartment:", response.data);
+    // Call onUpdate function to update parent state
+    onUpdate(updatedApt);
 
-      // Optionally reset form fields after successful API update
-      setUpdatedApt({
-        name: "",
-        accommodates: "",
-        bathrooms: "",
-        bedrooms: "",
-        beds: "",
-        price: "",
-        cleaning_fee: "",
-        cancellation_policy: "",
-        description: "",
-        house_rules: "",
-      });
-
-      // Navigate back to details page or perform other actions
-      navigate(`/apartments/${aptId}`);
-    } catch (error) {
-      console.error("API Error:", error);
-      // Handle error scenarios, show error messages to user, etc.
-    }
+    // Navigate back to details page
+    navigate(`/apartments/${aptId}`);
   };
 
   const handleCancel = () => {
-    // Handle cancel action
+    // Navigate back to details page without updating
     navigate(`/apartments/${aptId}`);
   };
 
@@ -110,7 +105,7 @@ function EditAptPage() {
         <input
           type="text"
           name="name"
-          value={updatedApt.name || ""}
+          value={updatedApt.name}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Name"
@@ -118,7 +113,7 @@ function EditAptPage() {
         <input
           type="number"
           name="accommodates"
-          value={updatedApt.accommodates || ""}
+          value={updatedApt.accommodates}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Accommodates"
@@ -127,7 +122,7 @@ function EditAptPage() {
         <input
           type="number"
           name="bathrooms"
-          value={updatedApt.bathrooms || ""}
+          value={updatedApt.bathrooms}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Bathrooms"
@@ -136,7 +131,7 @@ function EditAptPage() {
         <input
           type="number"
           name="bedrooms"
-          value={updatedApt.bedrooms || ""}
+          value={updatedApt.bedrooms}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Bedrooms"
@@ -145,7 +140,7 @@ function EditAptPage() {
         <input
           type="number"
           name="beds"
-          value={updatedApt.beds || ""}
+          value={updatedApt.beds}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Beds"
@@ -154,7 +149,7 @@ function EditAptPage() {
         <input
           type="number"
           name="price"
-          value={updatedApt.price || ""}
+          value={updatedApt.price}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Price"
@@ -163,7 +158,7 @@ function EditAptPage() {
         <input
           type="number"
           name="cleaning_fee"
-          value={updatedApt.cleaning_fee || ""}
+          value={updatedApt.cleaning_fee}
           onChange={handleChange}
           style={inputStyle}
           placeholder="Cleaning Fee"
@@ -171,7 +166,7 @@ function EditAptPage() {
         />
         <select
           name="cancellation_policy"
-          value={updatedApt.cancellation_policy || ""}
+          value={updatedApt.cancellation_policy}
           onChange={handleChange}
           style={selectStyle}
         >
@@ -182,14 +177,14 @@ function EditAptPage() {
         </select>
         <textarea
           name="description"
-          value={updatedApt.description || ""}
+          value={updatedApt.description}
           onChange={handleChange}
           style={{ ...inputStyle, ...fullWidthStyle, height: "100px" }}
           placeholder="Description"
         />
         <textarea
           name="house_rules"
-          value={updatedApt.house_rules || ""}
+          value={updatedApt.house_rules}
           onChange={handleChange}
           style={{ ...inputStyle, ...fullWidthStyle, height: "100px" }}
           placeholder="House Rules"

@@ -1,15 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import ApartmentCard from "./ApartmentCard";
 
-import rentalsData from "../rentals.json";
-
-function ApartmentList() {
-  const [apartments, setApartments] = useState(rentalsData);
-
-  const handleDelete = (id) => {
-    setApartments(apartments.filter((apartment) => apartment.id !== id));
-  };
-
+function ApartmentList({ apartments, onDelete, onEdit }) {
   return (
     <div className="apartment-list">
       <h2>Apartment Database</h2>
@@ -18,7 +10,8 @@ function ApartmentList() {
           <ApartmentCard
             key={apartment.id}
             apartment={apartment}
-            onDelete={handleDelete}
+            onDelete={onDelete}
+            onEdit={() => onEdit(apartment.id)}
           />
         ))
       ) : (

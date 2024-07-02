@@ -37,10 +37,10 @@ const titleStyle = {
 };
 
 function AddAptForm({ addApt }) {
+  const [name, setName] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [neighbourhood, setNeighbourhood] = useState("");
-  const [name, setName] = useState("");
   const [space, setSpace] = useState("");
   const [description, setDescription] = useState("");
   const [houseRules, setHouseRules] = useState("");
@@ -48,17 +48,17 @@ function AddAptForm({ addApt }) {
   const [hostSince, setHostSince] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [roomType, setRoomType] = useState("");
-  const [accommodates, setAccommodates] = useState(0);
-  const [bathrooms, setBathrooms] = useState(0);
-  const [bedrooms, setBedrooms] = useState(0);
-  const [beds, setBeds] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [cleaningFee, setCleaningFee] = useState(0);
+  const [accommodates, setAccommodates] = useState("");
+  const [bathrooms, setBathrooms] = useState("");
+  const [bedrooms, setBedrooms] = useState("");
+  const [beds, setBeds] = useState("");
+  const [price, setPrice] = useState("");
+  const [cleaningFee, setCleaningFee] = useState("");
   const [date, setDate] = useState("");
   const [cancellationPolicy, setCancellationPolicy] = useState("");
 
   const generateId = () => {
-    return Math.floor(Math.random() * (9999999 - 8455484 + 1)) + 8455484;
+    return '_' + Math.random().toString(36).substr(2, 9); // Using a simple UUID generation approach
   };
 
   const handleSubmit = (e) => {
@@ -66,10 +66,10 @@ function AddAptForm({ addApt }) {
     const id = generateId();
     const newListing = {
       id,
+      name,
       country,
       city,
       neighbourhood,
-      name,
       space,
       description,
       houseRules,
@@ -77,23 +77,23 @@ function AddAptForm({ addApt }) {
       hostSince,
       propertyType,
       roomType,
-      accommodates,
-      bathrooms,
-      bedrooms,
-      beds,
-      price,
-      cleaningFee,
+      accommodates: parseInt(accommodates, 10),
+      bathrooms: parseInt(bathrooms, 10),
+      bedrooms: parseInt(bedrooms, 10),
+      beds: parseInt(beds, 10),
+      price: parseFloat(price),
+      cleaningFee: parseFloat(cleaningFee),
       date,
       cancellationPolicy,
     };
-    console.log("New Listing ", newListing);
+
     addApt(newListing);
 
     // Reset form after submission
+    setName("");
     setCountry("");
     setCity("");
     setNeighbourhood("");
-    setName("");
     setSpace("");
     setDescription("");
     setHouseRules("");
@@ -101,12 +101,12 @@ function AddAptForm({ addApt }) {
     setHostSince("");
     setPropertyType("");
     setRoomType("");
-    setAccommodates(0);
-    setBathrooms(0);
-    setBedrooms(0);
-    setBeds(0);
-    setPrice(0);
-    setCleaningFee(0);
+    setAccommodates("");
+    setBathrooms("");
+    setBedrooms("");
+    setBeds("");
+    setPrice("");
+    setCleaningFee("");
     setDate("");
     setCancellationPolicy("");
   };
@@ -115,6 +115,27 @@ function AddAptForm({ addApt }) {
     <>
       <h1 style={titleStyle}>Add new apartment</h1>
       <form onSubmit={handleSubmit} style={formStyle}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          style={inputStyle}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          placeholder="Date"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          value={hostName}
+          onChange={(e) => setHostName(e.target.value)}
+          placeholder="Host Name"
+          style={inputStyle}
+        />
         <input
           type="text"
           value={country}
@@ -138,30 +159,9 @@ function AddAptForm({ addApt }) {
         />
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
-          style={inputStyle}
-        />
-        <input
-          type="text"
           value={space}
           onChange={(e) => setSpace(e.target.value)}
           placeholder="Space"
-          style={inputStyle}
-        />
-        <input
-          type="text"
-          value={hostName}
-          onChange={(e) => setHostName(e.target.value)}
-          placeholder="Host Name"
-          style={inputStyle}
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          placeholder="Date"
           style={inputStyle}
         />
         <select
@@ -191,44 +191,50 @@ function AddAptForm({ addApt }) {
         <input
           type="number"
           value={accommodates}
-          onChange={(e) => setAccommodates(Number(e.target.value))}
+          onChange={(e) => setAccommodates(e.target.value)}
           placeholder="Accommodates"
           style={inputStyle}
+          min="1"
         />
         <input
           type="number"
           value={bathrooms}
-          onChange={(e) => setBathrooms(Number(e.target.value))}
+          onChange={(e) => setBathrooms(e.target.value)}
           placeholder="Bathrooms"
           style={inputStyle}
+          min="0"
         />
         <input
           type="number"
           value={bedrooms}
-          onChange={(e) => setBedrooms(Number(e.target.value))}
+          onChange={(e) => setBedrooms(e.target.value)}
           placeholder="Bedrooms"
           style={inputStyle}
+          min="0"
         />
         <input
           type="number"
           value={beds}
-          onChange={(e) => setBeds(Number(e.target.value))}
+          onChange={(e) => setBeds(e.target.value)}
           placeholder="Beds"
           style={inputStyle}
+          min="0"
         />
         <input
           type="number"
           value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
+          onChange={(e) => setPrice(e.target.value)}
           placeholder="Price"
           style={inputStyle}
+          min="0"
         />
         <input
           type="number"
           value={cleaningFee}
-          onChange={(e) => setCleaningFee(Number(e.target.value))}
+          onChange={(e) => setCleaningFee(e.target.value)}
           placeholder="Cleaning Fee"
           style={inputStyle}
+          min="0"
         />
         <select
           value={cancellationPolicy}

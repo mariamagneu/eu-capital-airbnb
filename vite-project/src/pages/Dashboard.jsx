@@ -1,51 +1,56 @@
 import React, { useState } from "react";
 import ApartmentCard from "../components/ApartmentCard";
-import AddItemForm from "../components/AddItemForm";
-import UpdateItemForm from "../components/UpdateItemForm";
+import AddAptForm from "../components/AddAptForm";
+import EditAptPage from "../pages/EditAptPage";
 import rentalsData from "../rentals.json";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 function Dashboard() {
   const [apartments, setApartments] = useState(rentalsData);
-  const [currentItem, setCurrentItem] = useState(null);
-
-  const handleAdd = (newItem) => {
-    newItem.id = apartments.length ? apartments[apartments.length - 1].id + 1 : 1;
-    setApartments([...apartments, newItem]);
-  };
 
   const handleDelete = (id) => {
     setApartments(apartments.filter((apartment) => apartment.id !== id));
   };
 
-  const handleUpdate = (updatedItem) => {
-    setApartments(
-      apartments.map((apartment) =>
-        apartment.id === updatedItem.id ? updatedItem : apartment
-      )
+  const handleAddApartment = (newApartment) => {
+    newApartment.id = '_' + Math.random().toString(36).substr(2, 9); // Generate random ID
+    setApartments([newApartment, ...apartments]);
+  };
+
+  const handleEditApartment = (updatedApartment) => {
+    const updatedApartments = apartments.map((apartment) =>
+      apartment.id === updatedApartment.id ? updatedApartment : apartment
     );
-    setCurrentItem(null);
+    setApartments(updatedApartments);
   };
 
   return (
     <div className="dashboard">
+      <Routes>
+        <Route path="/" element={<Home apartments={apartments} onDelete={handleDelete} />} />
+        <Route path="/add" element={<AddAptForm addApt={handleAddApartment} />} />
+        <Route path="/edit/:id" element={<EditAptPage apartments={apartments} onUpdate={handleEditApartment} />} />
+      </Routes>
+    </div>
+  );
+}
+
+function Home({ apartments, onDelete }) {
+  return (
+    <>
       <h2>Apartment Database</h2>
-      <AddItemForm onAdd={handleAdd} />
-      {currentItem && (
-        <UpdateItemForm currentItem={currentItem} onUpdate={handleUpdate} />
-      )}
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <ApartmentCard
             key={apartment.id}
             apartment={apartment}
-            onDelete={handleDelete}
-            onEdit={() => setCurrentItem(apartment)}
+            onDelete={onDelete}
           />
         ))
       ) : (
         <p>No apartments available.</p>
       )}
-    </div>
+    </>
   );
 }
 

@@ -1,7 +1,5 @@
-import React from "react";
-import { useParams, Link } from "react-router-dom";
-import placeholderImage from "../assets/placeholderimg.jpg";
-import rentalsData from "../rentals.json"; // Assuming this is where your data is stored
+import React, { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const containerStyle = {
   border: "1px solid #c7afe9",
@@ -21,12 +19,13 @@ const containerStyle = {
 
 const imgContainerStyle = {
   width: "100%",
+  height: "500px",
+  overflow: "hidden",
 };
 
 const imgStyle = {
   width: "100%",
-  height: "auto",
-  borderRadius: "8px",
+  height: "100%",
   objectFit: "cover",
 };
 
@@ -36,17 +35,65 @@ const txtContainerStyle = {
   overflow: "auto",
 };
 
-function AptDetailsPage() {
+function AptDetailsPage({ apartments }) {
   const { aptId } = useParams();
-  const [aptData, setAptData] = React.useState(null);
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
-    // Simulating fetching data from rentalsData
-    const foundApt = rentalsData.find((apt) => apt.id.toString() === aptId);
+  const [aptData, setAptData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [randomImage, setRandomImage] = useState(null);
+
+  useEffect(() => {
+    const fetchRandomImage = async () => {
+      try {
+        const response = await fetch(
+          `https://api.pexels.com/v1/search?query=holiday%20apartments&per_page=1&page=${Math.floor(
+            Math.random() * 10 + 1
+          )}`,
+          {
+            headers: {
+              Authorization: "Bearer aqz2txxkC7hdXOmaKd0vWMN31S2PRLUdOLJRoVP0aNvQWI44fdfSq8CC",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch images");
+        }
+
+        const data = await response.json();
+
+        if (data.photos.length > 0) {
+          const randomIndex = Math.floor(Math.random() * data.photos.length);
+          setRandomImage(data.photos[randomIndex].src.medium);
+        } else {
+          setRandomImage("https://via.placeholder.com/400x300"); // Default placeholder image
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+        setRandomImage("https://via.placeholder.com/400x300"); // Set randomImage to placeholder on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRandomImage();
+  }, [aptId]);
+
+  useEffect(() => {
+    const foundApt = apartments.find((apt) => apt.id.toString() === aptId);
     if (foundApt) {
       setAptData(foundApt);
     }
-  }, [aptId]);
+  }, [apartments, aptId]);
+
+  const handleBackClick = () => {
+    navigate("/");
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!aptData) {
     return <div>Apartment not found.</div>;
@@ -56,7 +103,7 @@ function AptDetailsPage() {
     <div style={containerStyle}>
       <div className="imgContainer" style={imgContainerStyle}>
         <img
-          src={aptData.image || placeholderImage}
+          src={randomImage || "https://via.placeholder.com/400x300"}
           alt="location image"
           style={imgStyle}
         />
@@ -67,7 +114,8 @@ function AptDetailsPage() {
         </h1>
         <p>Rating: {aptData.review_scores_rating}/100</p>
         <p>Property Type: {aptData.property_type}</p>
-        <p>Description: {aptData.description}</p>
+        <h2>Description</h2>
+        <p>{aptData.description}</p>
         <p>Room Type: {aptData.room_type}</p>
         <p>Accommodates: {aptData.accommodates}</p>
         <p>Bathrooms: {aptData.bathrooms}</p>
@@ -83,12 +131,15 @@ function AptDetailsPage() {
         <p>Host Since: {aptData.host_since}</p>
         <p>Host Response Time: {aptData.host_response_time}</p>
 
-        {/* Edit button */}
         <Link to={`/apartments/edit/${aptId}`} style={{ textDecoration: "none" }}>
           <button style={{ marginTop: "10px", padding: "8px 16px", cursor: "pointer" }}>
             Edit
           </button>
         </Link>
+
+        <button onClick={handleBackClick} style={{ marginTop: "10px", padding: "8px 16px", cursor: "pointer" }}>
+          Back
+        </button>
       </div>
     </div>
   );
