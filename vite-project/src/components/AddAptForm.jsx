@@ -36,7 +36,8 @@ const titleStyle = {
   marginBottom: "16px",
 };
 
-function AddAptForm({ addApt }) {
+function AddAptForm({ addNewApartment }) {
+  console.log("addNewApartment type:", typeof addNewApartment);
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
@@ -58,10 +59,11 @@ function AddAptForm({ addApt }) {
   const [cancellationPolicy, setCancellationPolicy] = useState("");
 
   const generateId = () => {
-    return '_' + Math.random().toString(36).substr(2, 9); // Using a simple UUID generation approach
+    return "_" + Math.random().toString(36).substr(2, 9); // Using a simple UUID generation approach
   };
 
   const handleSubmit = (e) => {
+    console.log("something is trying to be submitted");
     e.preventDefault();
     const id = generateId();
     const newListing = {
@@ -87,7 +89,7 @@ function AddAptForm({ addApt }) {
       cancellationPolicy,
     };
 
-    addApt(newListing);
+    addNewApartment(newListing);
 
     // Reset form after submission
     setName("");

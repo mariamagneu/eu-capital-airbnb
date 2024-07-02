@@ -32,11 +32,14 @@ function App() {
   };
 
   const addNewApartment = (newApartment) => {
+    // Generate a new ID for the new apartment
     newApartment.id =
       apartments.length > 0
         ? Math.max(...apartments.map((apt) => apt.id)) + 1
         : 1;
-    setApartments([...apartments, newApartment]);
+
+    // Update state immutably using the functional form of setState
+    setApartments((prevApartments) => [newApartment, ...prevApartments]);
   };
 
   return (
@@ -72,7 +75,7 @@ function App() {
               />
               <Route
                 path="/add"
-                element={<AddAptForm addApt={addNewApartment} />}
+                element={<AddAptForm newApt={addNewApartment} />}
               />
               <Route path="*" element={<NotFound />} />
             </Routes>

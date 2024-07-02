@@ -12,6 +12,8 @@ function Dashboard({
 }) {
   return (
     <div className="dashboard">
+      <h2>Add New Apartment</h2>
+      <AddAptForm />
       <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
