@@ -3,6 +3,11 @@ import ApartmentCard from "../components/ApartmentCard";
 import AddAptForm from "../components/AddAptForm";
 import EditAptPage from "./EditAptPage";
 
+const titleStyle = {
+  marginBottom: "16px",
+  textAlign: "center",
+};
+
 function Dashboard({
   apartments,
   updateApartmentData,
@@ -11,9 +16,8 @@ function Dashboard({
 }) {
   return (
     <div className="dashboard">
-      <h2>Add New Apartment</h2>
       <AddAptForm handleNewApartment={handleAddApartment} />
-      <h2>Apartment Database</h2>
+      <h2 style={titleStyle}>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <ApartmentCard

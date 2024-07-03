@@ -4,7 +4,6 @@ import ApartmentCard from "./ApartmentCard";
 function ApartmentList({ apartments, onDelete, onEdit }) {
   return (
     <div className="apartment-list">
-      <h2>Apartment Database</h2>
       {apartments.length > 0 ? (
         apartments.map((apartment) => (
           <ApartmentCard

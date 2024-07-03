@@ -44,46 +44,27 @@ function AptDetailsPage({ apartments }) {
   const [randomImage, setRandomImage] = useState(null);
 
   useEffect(() => {
-    const fetchRandomImage = async () => {
-      try {
-        const response = await fetch(
-          `https://api.pexels.com/v1/search?query=holiday%20apartments&per_page=1&page=${Math.floor(
-            Math.random() * 10 + 1
-          )}`,
-          {
-            headers: {
-              Authorization: "Bearer aqz2txxkC7hdXOmaKd0vWMN31S2PRLUdOLJRoVP0aNvQWI44fdfSq8CC",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch images");
-        }
-
-        const data = await response.json();
-
-        if (data.photos.length > 0) {
-          const randomIndex = Math.floor(Math.random() * data.photos.length);
-          setRandomImage(data.photos[randomIndex].src.medium);
-        } else {
-          setRandomImage("https://via.placeholder.com/400x300"); // Default placeholder image
-        }
-      } catch (error) {
-        console.error("Error fetching images:", error);
-        setRandomImage("https://via.placeholder.com/400x300"); // Set randomImage to placeholder on error
-      } finally {
-        setLoading(false);
-      }
+    // Generate a random number between 1 and 10
+    const getRandomNumber = () => {
+      return Math.floor(Math.random() * 10) + 1;
     };
 
-    fetchRandomImage();
-  }, [aptId]);
+    // Construct the URL for a random asset image
+    const getRandomAssetUrl = () => {
+      const randomNum = getRandomNumber();
+      return `/assets/apt_${randomNum}.jpg`; // Adjust the path as per your asset structure
+    };
 
-  useEffect(() => {
+    // Set the random image URL
+    setRandomImage(getRandomAssetUrl());
+
+    // Find the apartment data from props based on aptId
     const foundApt = apartments.find((apt) => apt.id.toString() === aptId);
     if (foundApt) {
       setAptData(foundApt);
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   }, [apartments, aptId]);
 

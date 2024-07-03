@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const cardStyle = {
@@ -8,8 +8,8 @@ const cardStyle = {
   borderRadius: "8px",
   padding: "16px",
   marginBottom: "16px",
-  width: "80%",
-  color: "black",
+  width: "70%", // Adjusted to match AddAptForm
+  margin: "0 auto", // Center align horizontally
   display: "grid",
   gridTemplateColumns: "1fr 300px", // Adjusted for image
   gap: "16px",
@@ -31,38 +31,13 @@ function ApartmentCard({ apartment, onDelete }) {
   const [thumbnail, setThumbnail] = useState(null);
 
   useEffect(() => {
-    const fetchThumbnail = async () => {
-      try {
-        const response = await fetch(
-          `https://api.pexels.com/v1/search?query=holiday%20apartments&per_page=1&page=${Math.floor(
-            Math.random() * 10 + 1
-          )}`,
-          {
-            headers: {
-              Authorization: "Bearer aqz2txxkC7hdXOmaKd0vWMN31S2PRLUdOLJRoVP0aNvQWI44fdfSq8CC",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch images");
-        }
-
-        const data = await response.json();
-
-        if (data.photos.length > 0) {
-          setThumbnail(data.photos[0].src.medium);
-        } else {
-          setThumbnail("https://via.placeholder.com/400x300"); // Default placeholder image
-        }
-      } catch (error) {
-        console.error("Error fetching images:", error);
-        setThumbnail("https://via.placeholder.com/400x300"); // Set thumbnail to placeholder on error
-      }
+    const getRandomAssetUrl = () => {
+      const randomNum = Math.floor(Math.random() * 10) + 1;
+      return `../assets/apt_${randomNum}.jpg`; // Adjust the path as per your asset structure
     };
 
-    fetchThumbnail();
-  }, []);
+    setThumbnail(getRandomAssetUrl());
+  }, []); // Empty dependency array ensures this effect runs only once on mount
 
   const isHighlyRated = apartment.review_scores_rating > 80;
 
