@@ -36,8 +36,8 @@ const titleStyle = {
   marginBottom: "16px",
 };
 
-function AddAptForm({ addNewApartment }) {
-  console.log("addNewApartment type:", typeof addNewApartment);
+function AddAptForm({ handleNewApartment }) {
+  console.log("handleNewApartment type:", typeof handleNewApartment);
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
@@ -89,7 +89,7 @@ function AddAptForm({ addNewApartment }) {
       cancellationPolicy,
     };
 
-    addNewApartment(newListing);
+    handleNewApartment(newListing);
 
     // Reset form after submission
     setName("");

@@ -31,15 +31,8 @@ function App() {
     setApartments(updatedApartments);
   };
 
-  const addNewApartment = (newApartment) => {
-    // Generate a new ID for the new apartment
-    newApartment.id =
-      apartments.length > 0
-        ? Math.max(...apartments.map((apt) => apt.id)) + 1
-        : 1;
-
-    // Update state immutably using the functional form of setState
-    setApartments((prevApartments) => [newApartment, ...prevApartments]);
+  const handleAddApartment = (newApartment) => {
+    setApartments([newApartment, ...apartments]);
   };
 
   return (
@@ -56,6 +49,7 @@ function App() {
                   <Dashboard
                     apartments={apartments}
                     handleDelete={handleDelete}
+                    handleAddApartment={handleAddApartment}
                   />
                 }
               />
@@ -75,7 +69,7 @@ function App() {
               />
               <Route
                 path="/add"
-                element={<AddAptForm newApt={addNewApartment} />}
+                element={<AddAptForm handleNewApartment={handleAddApartment} />}
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
