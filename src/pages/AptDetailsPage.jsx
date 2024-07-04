@@ -1,6 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
+import image from "../assets/apt_1.jpg";
+import image1 from "../assets/apt_2.jpg";
+import image2 from "../assets/apt_3.jpg";
+import image3 from "../assets/apt_4.jpg";
+import image4 from "../assets/apt_5.jpg";
+import image5 from "../assets/apt_6.jpg";
+import image6 from "../assets/apt_7.jpg";
+import image7 from "../assets/apt_8.jpg";
+import image8 from "../assets/apt_9.jpg";
+import image9 from "../assets/apt_10.jpg";
+
+import placeholder from "../assets/Planchonella-House-2.jpg";
+
+const images = [
+  image,
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+];
+
 const containerStyle = {
   border: "1px solid #c7afe9",
   backgroundColor: "#e4d4fa",
@@ -36,36 +62,24 @@ const txtContainerStyle = {
 };
 
 function AptDetailsPage({ apartments }) {
+  const [thumbnail, setThumbnail] = useState(placeholder);
   const { aptId } = useParams();
   const navigate = useNavigate();
-
   const [aptData, setAptData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [randomImage, setRandomImage] = useState(null);
 
   useEffect(() => {
-    // Generate a random number between 1 and 10
-    const getRandomNumber = () => {
-      return Math.floor(Math.random() * 10) + 1;
-    };
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    setThumbnail(randomImage);
+  }, []);
 
-    // Construct the URL for a random asset image
-    const getRandomAssetUrl = () => {
-      const randomNum = getRandomNumber();
-      return `/assets/apt_${randomNum}.jpg`; // Adjust the path as per your asset structure
-    };
-
-    // Set the random image URL
-    setRandomImage(getRandomAssetUrl());
-
+  useEffect(() => {
     // Find the apartment data from props based on aptId
     const foundApt = apartments.find((apt) => apt.id.toString() === aptId);
     if (foundApt) {
       setAptData(foundApt);
-      setLoading(false);
-    } else {
-      setLoading(false);
     }
+    setLoading(false);
   }, [apartments, aptId]);
 
   const handleBackClick = () => {
@@ -83,11 +97,7 @@ function AptDetailsPage({ apartments }) {
   return (
     <div style={containerStyle}>
       <div className="imgContainer" style={imgContainerStyle}>
-        <img
-          src={randomImage || "https://via.placeholder.com/400x300"}
-          alt="location image"
-          style={imgStyle}
-        />
+        <img src={thumbnail} alt="location image" style={imgStyle} />
       </div>
       <div className="txtContainer" style={txtContainerStyle}>
         <h1>
@@ -112,13 +122,25 @@ function AptDetailsPage({ apartments }) {
         <p>Host Since: {aptData.host_since}</p>
         <p>Host Response Time: {aptData.host_response_time}</p>
 
-        <Link to={`/apartments/edit/${aptId}`} style={{ textDecoration: "none" }}>
-          <button style={{ marginTop: "10px", padding: "8px 16px", cursor: "pointer" }}>
+        <Link
+          to={`/apartments/edit/${aptId}`}
+          style={{ textDecoration: "none" }}
+        >
+          <button
+            style={{
+              marginTop: "10px",
+              padding: "8px 16px",
+              cursor: "pointer",
+            }}
+          >
             Edit
           </button>
         </Link>
 
-        <button onClick={handleBackClick} style={{ marginTop: "10px", padding: "8px 16px", cursor: "pointer" }}>
+        <button
+          onClick={handleBackClick}
+          style={{ marginTop: "10px", padding: "8px 16px", cursor: "pointer" }}
+        >
           Back
         </button>
       </div>
