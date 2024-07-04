@@ -1,5 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import placeholder from "../assets/Planchonella-House-2.jpg";
+import image from "../assets/apt_1.jpg";
+import image1 from "../assets/apt_2.jpg";
+import image2 from "../assets/apt_3.jpg";
+import image3 from "../assets/apt_4.jpg";
+import image4 from "../assets/apt_5.jpg";
+import image5 from "../assets/apt_6.jpg";
+import image6 from "../assets/apt_7.jpg";
+import image7 from "../assets/apt_8.jpg";
+import image8 from "../assets/apt_9.jpg";
+import image9 from "../assets/apt_10.jpg";
+
+const images = [
+  image,
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+];
 
 const cardStyle = {
   border: "1px solid #c7afe9",
@@ -27,17 +51,12 @@ const thumbnailStyle = {
 };
 
 function ApartmentCard({ apartment, onDelete }) {
+  useEffect(() => {
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    setThumbnail(randomImage);
+  }, []);
   const navigate = useNavigate();
   const [thumbnail, setThumbnail] = useState(null);
-
-  useEffect(() => {
-    const getRandomAssetUrl = () => {
-      const randomNum = Math.floor(Math.random() * 10) + 1;
-      return `../assets/apt_${randomNum}.jpg`; // Adjust the path as per your asset structure
-    };
-
-    setThumbnail(getRandomAssetUrl());
-  }, []); // Empty dependency array ensures this effect runs only once on mount
 
   const isHighlyRated = apartment.review_scores_rating > 80;
 
@@ -81,7 +100,11 @@ function ApartmentCard({ apartment, onDelete }) {
         </div>
       </div>
       <div>
-        <img src={thumbnail || "https://via.placeholder.com/400x300"} alt="thumbnail" style={thumbnailStyle} />
+        <img
+          src={thumbnail || placeholder}
+          alt="thumbnail"
+          style={thumbnailStyle}
+        />
       </div>
     </div>
   );
